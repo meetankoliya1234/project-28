@@ -1,33 +1,31 @@
 class tree
 {
-	constructor(x,y,w,h)
+	constructor(x,y)
 	{
-		var options={
-			isStatic:true,
-			restitution:0,
-			friction:1,
-			density:1.2			
-			}
-		this.image=loadImage("project 28 img/images/tree.png");
 		this.x=x;
 		this.y=y;
-		this.w=w
-		this.h=h
-		this.body=Bodies.rectangle(x, y, w, h , options);
- 		World.add(world, this.body);
+		this.treeWidth=450;
+		this.treeHeight=600;
+		this.wallThickness=10;
+		
+		this.image=loadImage("project 28 img/images/tree.png")
+		this.bottomBody=Bodies.rectangle(this.x, this.y, this.treeWidth, this.wallThickness, {isStatic:true})
+		this.leftWallBody=Bodies.rectangle(0, this.y-this.treeHeight/2, this.wallThickness, this.treeHeight, {isStatic:false})
+		this.rightWallBody=Bodies.rectangle(this.x+this.treeWidth/2, this.y-this.treeHeight/2, this.wallThickness, this.treeHeight, {isStatic:false})
+		
+		World.add(world, this.bottomBody)
+		World.add(world, this.leftWallBody)
+		World.add(world, this.rightWallBody);
 
 	}
 	display()
 	{
-			
-			var treePos=this.body.position;		
-
+			var posBottom=this.bottomBody.position;
 			push()
-			translate(treePos.x, treePos.y);
-			imageMode(CENTER)
-			strokeWeight(4);
-			fill(255,255,0)
-			image(this.image,0,0,this.w, this.h);
+			translate(posBottom.x, posBottom.y+10);
+			fill(255)
+			imageMode(CENTER);
+			image(this.image, 0,-this.treeHeight/2,this.treeWidth, this.treeHeight)
 			pop()
 			
 	}
